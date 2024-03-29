@@ -63,6 +63,7 @@ export enum PageName {
   ADMIN='admin',
   ADMIN_PRODUCT='product',
   ADMIN_USER='user',
+  ADMIN_CATEGORY='category',
   BLOG='blog'
 }
 
@@ -236,7 +237,7 @@ export const DEFAULT_COMMON_LIST_QUERY = {
   page: DEFAULT_FIRST_PAGE,
   keyword: undefined,
   orderBy: 'createdAt',
-  orderDirection: 'desc',
+  // orderDirection: 'desc',
   limit: DEFAULT_LIMIT_FOR_PAGINATION,
 };
 

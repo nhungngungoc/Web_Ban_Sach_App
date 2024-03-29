@@ -97,6 +97,15 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: 'category',
+        name:PageName.ADMIN_CATEGORY,
+        component: () => import('../views/Admin/Category/CategoryView.vue'),
+        meta: {
+          role:Role.ADMIN,
+          public:false,
+        },
+      },
+      {
         path: 'test',
         name:'sds',
         component: () => import('../views/Admin/User/TestView.vue'),
@@ -118,10 +127,10 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(
-  VueRouteMiddleware({
-    [GLOBAL_MIDDLEWARE_NAME]: authMiddleware,
-  }) as NavigationGuardWithThis<unknown>,
-);
+// router.beforeEach(
+//   VueRouteMiddleware({
+//     [GLOBAL_MIDDLEWARE_NAME]: authMiddleware,
+//   }) as NavigationGuardWithThis<unknown>,
+// );
 
 export default router
