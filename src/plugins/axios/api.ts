@@ -67,4 +67,7 @@ export class ApiService {
             }
         });
     }
+    _getDropdown<R>(id: number | string): Promise<R> {
+        return this.client.get<R, R>(this.baseUrl + '/getDropdown');
+    }
 }

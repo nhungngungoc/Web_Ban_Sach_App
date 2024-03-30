@@ -9,10 +9,11 @@ export type IBodyUser = {
 };
 export type IProduct={
     id:string
-    name:string;
-    price:number;
-    quantity:number;
-    description:string;
+    tenSP:string;
+    image:string;
+    moTa:string;
+    gia:number;
+    tenTacGia:string;
 }
 export type  IProductGetAll= {
     items: [];

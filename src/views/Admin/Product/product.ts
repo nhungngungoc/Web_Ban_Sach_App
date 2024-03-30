@@ -16,8 +16,8 @@ export const useProduct = () => {
           logout()
         if(res.success)
           return {
-            data:res.items,
-            totalItems:res.totalItems
+            data:res.data.items,
+            totalItems:res.data.totalItems
           }
         return null
       } catch (error) {
@@ -31,12 +31,11 @@ export const useProduct = () => {
       try {
         loading.setLoading(true)
         const res = await productServiceApi._getList<IProduct>(query);
-        if(res.status===419)
-          logout()
+        console.log(res)
         if(res.success)
             return {
-              data:res.items,
-              totalItems:res.totalItems
+              data:res.data.items,
+              totalItems:res.data.totalItems
             }
         return null
       } catch (error) {

@@ -23,7 +23,7 @@ const { fetchProducts, products, query, searchProducts } = useProduct()
 import { useLoadingStore } from "@/store/loading";
 const loading=useLoadingStore()
 onMounted(async () => {
-  query.keyword=''
+  query.keyword=undefined
   query.page=1
   loadData()
 })
@@ -150,7 +150,7 @@ watch(isShowDialog,(newVal)=>{
                   Giá
                 </th>
                 <th class="text-left text-uppercase text-medium-emphasis">
-                  Số lượng
+                  Tên tác giả
                 </th>
                 <th class="text-left text-uppercase text-medium-emphasis">
                   Mô tả
@@ -163,16 +163,17 @@ watch(isShowDialog,(newVal)=>{
                 </th>
               </tr>
             </thead>
-            <tbody>
-              <tr v-if="products.length>0" v-for="(item, index) in products" :key="index">
-                <td style="width: 250px;height: 58px;"><b><p style="width: 100%;max-height: 58px;overflow: hidden;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;">{{ item.name }}</p></b></td>
-                <td>${{ formatNumberWithCommas(item.price) }}</td>
-                <td>{{ formatNumberWithCommas(item.quantity) }}</td>
+            <tbody v-if="products.length>0">
+              <tr  v-for="(item, index) in products" :key="index">
+                <td style="width: 250px;height: 58px;"><b><p style="width: 100%;max-height: 58px;overflow: hidden;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;">{{ item.tenSP }}</p></b></td>
+                <td>${{ formatNumberWithCommas(item.gia) }}</td>
+                <!-- <td>{{ formatNumberWithCommas(item.quantity) }}</td> -->
+                <td>{{ item.tenTacGia }}</td>
                 <td style="width: 250px;height: 58px;" class="v-text-truncate">
-                  <p style="width: 100%;max-height: 58px;overflow: hidden;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;">{{ item.description }}</p>
+                  <p style="width: 100%;max-height: 58px;overflow: hidden;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;">{{ item.moTa }}</p>
                 </td>
                 <td>
-                  <v-img style="border-radius: 2px;" width="36" height="36" :src="item.imageUrl"></v-img>
+                  <v-img style="border-radius: 2px;" width="36" height="36" :src="item.image"></v-img>
                 </td>
                 <td class="text-center">
                   <div class="d-flex align-center justify-center">
@@ -181,7 +182,10 @@ watch(isShowDialog,(newVal)=>{
                   </div>
                 </td>
               </tr>
-              <tr v-else>
+              <tr></tr>
+            </tbody>
+            <tbody v-else>
+              <tr>
                 <td colspan="6"><p class="text-center text-red">Không có dữ liệu</p></td>
               </tr>
               <tr></tr>

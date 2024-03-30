@@ -14,6 +14,12 @@
                             hide-details variant="outlined"></v-text-field>
                         <span style="color:red">{{ nameError }}</span>
                     </div>
+                    <div style="display: block; margin-top: 8px;">
+                        <span>Loại sản phẩm </span> <span class="text-blue ml-2">*</span>
+                        <v-select class="mt-1" v-model="category_id" :items="categortDropDown" item-title="text" item-value="value" label="Loại sản phẩm"
+                        style="background-color: white;" density="compact" single-line hide-details variant="outlined"></v-select>
+                        <span style="color:red">{{ category_idError }}</span>
+                    </div>
                     <div style="display: block; margin-top: 12px;">
                         <span>Giá</span><span class="text-blue ml-2">*</span>
                         <v-text-field class="mt-1" v-model="price" placeholder="Nhập giá sản phẩm"
@@ -23,11 +29,11 @@
                         <span style="color:red">{{ errorPrice2 }}</span>
                     </div>
                     <div style="display: block; margin-top: 12px;">
-                        <span>Số lượng</span><span class="text-blue ml-2">*</span>
-                        <v-text-field class="mt-1" type="number" v-model="quantity" placeholder="Nhập số lượng sản phẩm"
-                            :error-messages="quantityError" required style="background-color: white;" density="compact"
+                        <span>Tác giả</span><span class="text-blue ml-2">*</span>
+                        <v-text-field class="mt-1" v-model="tacgia" placeholder="Nhập số lượng sản phẩm"
+                            :error-messages="tacgiaError" required style="background-color: white;" density="compact"
                             single-line hide-details variant="outlined"></v-text-field>
-                        <span style="color:red">{{ quantityError }}</span>
+                        <span style="color:red">{{ tacgiaError }}</span>
                     </div>
                     <div style="display: block; margin-top: 12px;">
                         <span>Mô tả</span>
@@ -62,8 +68,9 @@
 <script setup>
 import { useForm, useField } from 'vee-validate';
 import * as yup from 'yup';
-import { ref, watch, onUpdated } from 'vue';
+import { ref, watch, onUpdated,onMounted } from 'vue';
 import { productServiceApi } from '@/service/product.api';
+import { categoryServiceApi } from '@/service/category.api';
 import { showSuccessNotification, showWarningsNotification } from '@/common/helper/helpers';
 import { useLoadingStore } from '@/store/loading';
 import { MESSAGE_ERROR, Regex } from '@/common/contant/contants';
@@ -82,17 +89,26 @@ watch(() => props.itemEdit, (newValue, oldValue) => {
         getProductById(newValue.id)
     }
 });
+
+const categortDropDown=ref([])
+onMounted(()=>{
+    getCategortDropDown()
+})
+const getCategortDropDown=async()=>{
+    const res=await categoryServiceApi._getDropdown()
+    categortDropDown.value=res.data
+}
 const getProductById = async (id) => {
     try {
         loading.setLoading(true)
         const data = await productServiceApi._getDetail(id);
-        if(data.status===419)
-          logout()
+        console.log(data)
         if (data.success) {
-            name.value = data.data.name;
-            price.value = data.data.price;
-            description.value = data.data.description;
-            quantity.value = data.data.quantity;
+            name.value = data.data.tenSP;
+            price.value = data.data.gia;
+            description.value = data.data.moTa;
+            tacgia.value = data.data.tenTacGia;
+            category_id.value=data.data.categoryId;
         }
         else {
             showWarningsNotification(data.message)
@@ -103,13 +119,6 @@ const getProductById = async (id) => {
         loading.setLoading(false)
     }
 }
-// const getProductById = (item) => {
-//     console.log(item)
-//     name.value = item.name;
-//     price.value = item.price;
-//     description.value = item.description;
-//     quantity.value = item.quantity;
-// }
 onUpdated(() => {
     if (props.itemEdit === null)
     {
@@ -131,6 +140,12 @@ const { value: name, errorMessage: nameError } = useField(
         .matches(Regex.NAME_PRODUCT,MESSAGE_ERROR.NAME)
 );
 
+const { value: category_id, errorMessage: category_idError } = useField(
+    'category_id',
+    yup
+        .string()
+        .required(MESSAGE_ERROR.REQUIRE)
+);
 
 const { value: price, errorMessage: priceError } = useField(
     'price',
@@ -142,26 +157,20 @@ const { value: price, errorMessage: priceError } = useField(
         .max(Regex.MAX_PRICE,MESSAGE_ERROR.MAX_PRICE)
 );
 
-const { value: quantity, errorMessage: quantityError } = useField(
-    'quantity',
+const { value: tacgia, errorMessage: tacgiaError } = useField(
+    'tacgia',
     yup
-        .number()
+        .string()
         .required(MESSAGE_ERROR.REQUIRE)
-        .integer(MESSAGE_ERROR.NUMBER_INT)
-        .min(Regex.MIN, MESSAGE_ERROR.MIN)
-        .typeError(MESSAGE_ERROR.NUMBER)
-        .max(Regex.MAX_QUANTITY,MESSAGE_ERROR.MAX_QUANTITY)
 );
-//const { value: description, errorMessage: descriptionError } = useField(
-//    'description',
-//    yup
-//        .string()
-//        .required(MESSAGE_ERROR.REQUIRE)
-//        .min(10, 'Mô tả phải có ít nhất 10 ký tự')
- //       .max(500, 'Mô tả không được quá 500 ký tự')
-//);
-const description=ref(null)
-
+const { value: description, errorMessage: descriptionError } = useField(
+   'description',
+   yup
+       .string()
+       .required(MESSAGE_ERROR.REQUIRE)
+       .min(10, 'Mô tả phải có ít nhất 10 ký tự')
+       .max(500, 'Mô tả không được quá 500 ký tự')
+);
 const submit = handleSubmit(async () => {
     if(errorPrice2.value!=null)
     {
@@ -171,13 +180,13 @@ const submit = handleSubmit(async () => {
         // alert( typeof parseInt(price.value))
         loading.setLoading(true)
         const formData = new FormData();
-        formData.append('name', name.value);
-        formData.append('price',parseInt(price.value));
-        formData.append('quantity',parseInt(quantity.value));
-        formData.append('description', description.value?description.value:"");
+        formData.append('Id', props.itemEdit?props.itemEdit.id:null);
+        formData.append('TenSP', name.value);
+        formData.append('Gia',price.value);
+        formData.append('TenTacGia',tacgia.value);
+        formData.append('MoTa', description.value?description.value:"");
         formData.append('file', imageFile.value);
-
-        
+        formData.append('CategoryId', category_id.value);
         if (props.itemEdit == null) {
             if(imageFile.value==null)
             {
