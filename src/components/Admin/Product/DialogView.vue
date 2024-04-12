@@ -30,7 +30,7 @@
                     </div>
                     <div style="display: block; margin-top: 12px;">
                         <span>Tác giả</span><span class="text-blue ml-2">*</span>
-                        <v-text-field class="mt-1" v-model="tacgia" placeholder="Nhập số lượng sản phẩm"
+                        <v-text-field class="mt-1" v-model="tacgia" placeholder="Nhập tên tác giả"
                             :error-messages="tacgiaError" required style="background-color: white;" density="compact"
                             single-line hide-details variant="outlined"></v-text-field>
                         <span style="color:red">{{ tacgiaError }}</span>
@@ -46,9 +46,6 @@
                         <span>Ảnh sản phẩm</span><span v-show="!itemEdit" class="text-blue ml-2">*</span><br>
                         <input @change="handleImageChange" type="file" class="custom-file-input mt-1" />
                         <span style="color:red">{{ errorFile }}</span>
-                        <!-- <v-text-field placeholder="Nhập link ảnh" style="background-color: white;" density="compact"
-                                single-line hide-details variant="outlined"></v-text-field> -->
-                        <!-- <v-file-input single-line hide-details variant="outlined" label="Chọn ảnh" density="compact" color="white" style="background-color: white;"></v-file-input> -->
                     </div>
                 </v-container>
                 <v-card-actions class="pr-4">

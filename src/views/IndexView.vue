@@ -18,16 +18,16 @@
             </v-toolbar>
             <v-list density="compact" nav>
                 <v-list-item v-show="this.rail == false" class="text-uppercase text-item"
-                    style="color: #8B909A;font-size: 11px;">Quản lý sản phẩm</v-list-item>
+                    style="color: #8B909A;font-size: 11px;">Quản lý</v-list-item>
                 <v-list-item style="color: #8B909A;font-size: 15px;"
-                    :class="{ 'font-weight-bold': title === 'Danh sách sản phẩm' }"
-                    @click="setTilteStore('Danh sách sản phẩm')" prepend-icon="mdi-hexagon-slice-6" to='product'>
-                    <p>Sản phẩm</p>
+                    :class="{ 'font-weight-bold': title === 'Danh sách loại sản phẩm' }"
+                    @click="setTilteStore('Danh sách loại sản phẩm')" prepend-icon="mdi-hexagon-slice-6" to='category'>
+                    <p>Loại sản phẩm</p>
                 </v-list-item>
                 <v-list-item style="color: #8B909A; font-size: 15px;"
-                    :class="{ 'font-weight-bold': title === 'Danh sách người dùng' }" prepend-icon="mdi-account-supervisor"
-                    @click="setTilteStore('Danh sách người dùng')" to='user'>
-                    <p>Users</p>
+                    :class="{ 'font-weight-bold': title === 'Danh sách sản phẩm' }" prepend-icon="mdi-account-supervisor"
+                    @click="setTilteStore('Danh sách sản phẩm')" to='product'>
+                    <p>Sản phẩm</p>
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
