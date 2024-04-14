@@ -21,4 +21,4 @@ class AuthApiService extends ApiService {
   }
 }
 
-export const authServiceApi = new AuthApiService({ baseUrl: '/auth' }, axiosInstance);
+export const authServiceApi = new AuthApiService({ baseUrl: '/Auth' }, axiosInstance);

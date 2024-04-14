@@ -31,15 +31,15 @@ export const AuthStore = defineStore('authStore', () => {
     const res = await authServiceApi.login(body);
     console.log(res)
     if (res.success && res.data!=null) {
-      localStorageAuthService.setAccessToken(res.data.accessToken.token);
-      localStorageAuthService.setAccessTokenExpiredAt(res.data.accessToken.expiresIn);
+      localStorageAuthService.setAccessToken(res.data?.accessToken?.token);
+      localStorageAuthService.setAccessTokenExpiredAt(res.data?.accessToken?.expiresIn);
 
-      localStorageAuthService.setRefreshToken(res.data.refreshToken.token);
-      localStorageAuthService.setRefresh_TokenExpiredAt(res.data.refreshToken.expiresIn);
+      localStorageAuthService.setRefreshToken(res.data?.refreshToken?.token);
+      localStorageAuthService.setRefresh_TokenExpiredAt(res.data.refreshToken?.expiresIn);
       
-      localStorageAuthService.setUserRole(res.data.profile?.role || "");
+      // localStorageAuthService.setUserRole(res.data.profile?.role || "");
 
-      localStorageAuthService.setAvatarUrl(res.data.profile?.avatar || "")
+      // localStorageAuthService.setAvatarUrl(res.data.profile?.avatar || "")
 
       return true
     }
