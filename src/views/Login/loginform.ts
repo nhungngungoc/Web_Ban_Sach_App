@@ -44,18 +44,18 @@ export const userLoginForm=()=>{
         loading.setLoading(false)
         if(res)
         {
-          // if(localStorageAuthService.getUserRole()===Role.ADMIN)
-          // {
+          if(localStorageAuthService.getUserRole()===Role.ADMIN)
+          {
             showSuccessNotification("Đăng nhập thành công")
             router.push('/admin/category')
-          // }
-          // else if(localStorageAuthService.getUserRole()===Role.USER)
-          // {
-            // showSuccessNotification("Đăng nhập thành công")
-            // router.push('/')
-          // }
-          // else
-          //   showWarningsNotification("Lỗi Role ở login")
+          }
+          else if(localStorageAuthService.getUserRole()===Role.USER)
+          {
+            showSuccessNotification("Đăng nhập thành công")
+            router.push('/')
+          }
+          else
+            showWarningsNotification("Lỗi Role ở login")
         }
       });
     const isValidForm = computed(() => meta.value.valid);

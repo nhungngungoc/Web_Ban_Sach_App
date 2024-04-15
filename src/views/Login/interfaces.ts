@@ -53,10 +53,8 @@ export type IBodyLogin = {
 };
 
 export type IBodyRegister = {
-  email?: string;
-  password?: string;
-  code?: string;
-  redirectUri?: string;
+  Email?: string;
+  MatKhau?: string;
 };
 export interface ILoginResponse {
   accessToken: {
@@ -67,7 +65,7 @@ export interface ILoginResponse {
     token: string;
     expiresIn: number;
   };
-  profile: IUser;
+  role: string;
 }
 
 export interface IGetListResponse<T> {

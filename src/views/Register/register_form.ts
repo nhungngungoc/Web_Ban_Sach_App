@@ -6,6 +6,7 @@ import { useLoadingStore } from '@/store/loading';
 import localStorageAuthService from '@/common/storages/authStorage';
 import { Role } from '@/common/contant/contants';
 import { showSuccessNotification } from '@/common/helper/helpers';
+import router from '@/router';
 export const userRegisterForm=()=>{
     const authStore=AuthStore()
     const loading=useLoadingStore()
@@ -39,13 +40,14 @@ export const userRegisterForm=()=>{
       const handleLogin = handleSubmit(async (values) => {
         loading.setLoading(true)
         const res = await authStore.register({
-          email: values.email,
-          password: values.password,
+          Email: values.email,
+          MatKhau: values.password,
         });
         loading.setLoading(false)
         if(res)
         {
-            showSuccessNotification("Đăng ký thành công. Vui lòng vào email để xác minh")
+            showSuccessNotification("Đăng ký thành công. Vui lòng đăng nhập")
+            router.push('/login')
         }
         else
         {

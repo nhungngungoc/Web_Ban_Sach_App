@@ -17,7 +17,6 @@ export const AuthStore = defineStore('authStore', () => {
   async function register(body: IBodyRegister)
   {
     const res=await authServiceApi.register(body)
-    // console.log(res)
     if(!res.success)
     {
       showWarningsNotification(res.message)
@@ -37,7 +36,7 @@ export const AuthStore = defineStore('authStore', () => {
       localStorageAuthService.setRefreshToken(res.data?.refreshToken?.token);
       localStorageAuthService.setRefresh_TokenExpiredAt(res.data.refreshToken?.expiresIn);
       
-      // localStorageAuthService.setUserRole(res.data.profile?.role || "");
+      localStorageAuthService.setUserRole(res.data.role || "");
 
       // localStorageAuthService.setAvatarUrl(res.data.profile?.avatar || "")
 
