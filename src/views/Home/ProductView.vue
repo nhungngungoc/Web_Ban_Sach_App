@@ -6,21 +6,17 @@
         <v-card hover variant="flat" style="min-height: 472px;width: 250px;" class="mb-3 my-card">
           <v-img class="mx-auto mt-2" width="220px" height="224px" :src="item.image" alt="Product Image"></v-img>
           <v-card-text class="my-card-text"
-            style="max-width: 227px;font-size: 16px;line-height: 24px; height: 90px;font-family: 'Inter', sans-serif;color: #19191D;">{{
+            style="max-width: 227px;font-size: 16px;line-height: 24px; height: 65px;font-family: 'Inter', sans-serif;color: #19191D;">{{
               item.tenSP }}</v-card-text>
           <v-card-text class="mt-2 mx-auto"
             style="font-family: 'Inter', sans-serif;color:#000000;max-width: 250px;font-size: 24px;font-weight: 700;padding: auto;height: 36px;">
-            {{ item.gia }}
-            <span v-if="item.sale > 0"
-              style="border-radius: 4px;margin-right: 0.7%;font-size: 12px;float: right;min-width: 70px;min-height: 24px;padding: 2px;background-color: #ECF7ED;text-align: center;color: #37833B;font-weight: 300;font-family: Roboto;">
-              {{ item.sale }}% OFF
-            </span>
-            <span v-if="item.cool == true"
+            {{ formatNumberWithCommas(item.gia) }}
+            <span
               style="border-radius: 4px;margin-right: 0.7%;font-size: 12px;float: right;min-width: 70px;min-height: 24px;padding: 2px;background-color: #FDEDF2;text-align: center;color: #C23564;font-weight: 300;font-family: Roboto;">
               Cool deal!
             </span>
           </v-card-text>
-          <p class="ml-4"
+          <p class="ml-4 text-truncate"
             style="margin-top: 8px;height: 41px;font-size: 14px;font-family: 'Inter', sans-serif;color: #787885;">{{
               item.moTa }}</p>
           <v-row style="margin-top: 5px;margin-left: -6px;">
@@ -76,6 +72,7 @@
 </template>
 
 <script setup>
+import { formatNumberWithCommas } from "@/common/helper/helpers"
 import { onBeforeMount } from "vue"
 import footer1 from "@/assets/footer1.png"
 import footer2 from "@/assets/footer2.png"
