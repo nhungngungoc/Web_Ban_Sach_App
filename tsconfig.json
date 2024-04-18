@@ -33,7 +33,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-, "src/common/contant"  ],
+, "src/common/contant", "src/views/Home/interface"  ],
   "exclude": [
     "node_modules"
   ]
