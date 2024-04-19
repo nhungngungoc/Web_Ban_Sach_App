@@ -31,9 +31,10 @@
               <span style="font-size: 12px;">4.05</span>
             </v-col>
             <v-col class="text-right" cols="6">
-              <v-btn class="text-capitalize" style="margin-right: 6px;font-family: 'Inter', sans-serif;font-size: 14px;"
-                color="primary" size="small" prepend-icon="mdi-heart-outline" variant="outlined">
-                Watch
+              <v-btn @click="addToCart(item.id)" class="text-capitalize"
+                style="margin-right: 6px;font-family: 'Inter', sans-serif;font-size: 14px;" color="primary" size="small"
+                prepend-icon="mdi-cart" variant="outlined">
+                Add cart
               </v-btn>
             </v-col>
           </v-row>
@@ -71,21 +72,27 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { formatNumberWithCommas } from "@/common/helper/helpers"
 import { onBeforeMount } from "vue"
 import footer1 from "@/assets/footer1.png"
 import footer2 from "@/assets/footer2.png"
 import footer3 from "@/assets/footer3.png"
 import { useProductStore } from './store/product.store'
+import { userCartSotore } from "./store/cart.store"
 import { storeToRefs } from "pinia"
-
+const cartStore = userCartSotore()
+const { actions, addCart } = cartStore
 const productStore = useProductStore()
 const { fetchProduct } = productStore
 const { products } = storeToRefs(productStore);
 onBeforeMount(async () => {
   await fetchProduct()
 })
+async function addToCart(productId: string) {
+  actions.setProductIdAddCartVM(productId)
+  await addCart()
+}
 </script>
 
 <style>
@@ -97,9 +104,7 @@ onBeforeMount(async () => {
 
 .my-card {
   max-height: 200px;
-  /* Đặt chiều cao tối đa của thẻ */
   overflow: hidden;
-  /* Ẩn phần nội dung vượt quá chiều cao */
 }
 
 .my-card-text {
