@@ -9,22 +9,22 @@ import { PageName, Role } from "../common/contant/contants";
 import authMiddleware from "./authMiddleware";
 import VueRouteMiddleware, { GLOBAL_MIDDLEWARE_NAME } from "./middleware";
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/home",
-    name: "home",
-    component: () => import("../views/Home/HomePage.vue"),
-    meta: {
-      public: true,
-    },
-  },
-  {
-    path: "/home1",
-    name: "home1",
-    component: () => import("../views/Home/HomeView.vue"),
-    meta: {
-      public: true,
-    },
-  },
+  // {
+  //   path: "/home",
+  //   name: "home",
+  //   component: () => import("../views/Home/HomePage.vue"),
+  //   meta: {
+  //     public: true,
+  //   },
+  // },
+  // {
+  //   path: "/home1",
+  //   name: "home1",
+  //   component: () => import("../views/Home/HomeView.vue"),
+  //   meta: {
+  //     public: true,
+  //   },
+  // },
   {
     path: "/",
     name: PageName.TRANG_CHU,
