@@ -18,8 +18,8 @@
                     style="border-color: #9DC2FF;height: 40px;color: #2264D1;font-weight: 700;">Đăng <span
                         class="text-lowercase ml-1">nhập</span></v-btn>
                 <v-badge v-show="token" content="2" color="red">
-                    <v-btn class="text-capitalize ml-2" elevation="1" style="color: #2264D1;font-weight: 700;">My <span
-                            class="text-lowercase ml-1">cart</span></v-btn>
+                    <v-btn variant="text" class="text-capitalize ml-2" elevation="1"
+                        style="color: #2264D1;font-weight: 700;" icon="mdi mdi-cart"></v-btn>
                 </v-badge>
                 <v-avatar v-if="token" class="ml-4">
                     <v-img alt="John" src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>

@@ -9,6 +9,16 @@ class CartApiService extends ApiService {
   async addCart(formData: IAddCart): Promise<IBodyResponse<any>> {
     return await this.client.post(`${this.baseUrl}`, formData);
   }
+  async updateCart(formData: IAddCart): Promise<IBodyResponse<any>> {
+    return await this.client.patch(`${this.baseUrl}`, formData);
+  }
+  async getCart() {
+    return await this.client.get(this.baseUrl, {
+      headers: {
+        Authorization: "Bearer " + localStorageAuthService.getAccessToken(),
+      },
+    });
+  }
 }
 
 export const cartServiceApi = new CartApiService(
