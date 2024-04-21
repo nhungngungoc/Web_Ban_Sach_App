@@ -50,6 +50,14 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/thanhtoan",
+    name: "thanhtoan",
+    component: () => import("../views/WebApp/pages/ThanhToan.vue"),
+    meta: {
+      public: true,
+    },
+  },
+  {
     path: "/index",
     name: PageName.BLOG,
     component: () => import("../views/BlogView.vue"),

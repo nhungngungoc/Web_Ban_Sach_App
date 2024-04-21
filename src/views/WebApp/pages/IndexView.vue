@@ -34,4 +34,12 @@ import CarouselView from '../components/CarouselView.vue'
 import ProductView from '../components/ProductView.vue'
 import CategoryView from '../components/CategoryView.vue'
 import FooterView from '../components/FooterView.vue'
+import { onMounted } from 'vue'
+import { useProductStore } from '../store/product.store'
+const { actions, fetchProduct } = useProductStore()
+onMounted(async () => {
+    actions.setCategoryIdQuery("")
+    actions.setKeywordQuey("")
+    await fetchProduct()
+})
 </script>

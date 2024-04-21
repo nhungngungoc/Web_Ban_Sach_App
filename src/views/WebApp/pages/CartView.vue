@@ -4,6 +4,7 @@ import FooterView from '../components/FooterView.vue'
 import { formatNumberWithCommas } from '@/common/helper/helpers'
 import { userCartSotore } from '../store/cart.store'
 import { onMounted } from 'vue'
+import router from '@/router'
 import { storeToRefs } from 'pinia'
 const cartStore = userCartSotore()
 const { carts, totalGia, soLuongSanPham } = storeToRefs(cartStore)
@@ -21,6 +22,11 @@ async function tang(item) {
     await getCarts()
 }
 async function giam(item) {
+    if (item.quantity === 1) {
+        await deleteCart(item.cartId)
+        await getCarts()
+        return
+    }
     actions.setProductIdAddCartVM(item.productId)
     actions.setQuantity(item.quantity - 1 + "")
     actions.setId(item.cartId)
@@ -30,6 +36,9 @@ async function giam(item) {
 async function handleDeletCart(item) {
     await deleteCart(item.cartId)
     await getCarts()
+}
+function toPage(name) {
+    router.push({ name: name })
 }
 </script>
 <template>
@@ -103,7 +112,7 @@ async function handleDeletCart(item) {
 
                         <div class="d-flex pl-5 mt-2">
                             <div style="width: 100%;" class="d-flex justify-end">
-                                <v-btn color="success" class="mr-2">Thanh toán</v-btn>
+                                <v-btn @click="toPage('thanhtoan')" color="success" class="mr-2">Thanh toán</v-btn>
                             </div>
                         </div>
                     </div>
