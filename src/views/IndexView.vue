@@ -6,13 +6,15 @@
                     <v-col cols="8">
                         <!-- @mouseover="rail = false" -->
                         <v-toolbar-title @click.stop="rail = !rail" class="ma-3">
-                            <v-img width="250"
-                                src="https://res.cloudinary.com/dgtjdhrnq/image/upload/v1705460127/logo1_adshdl.png"></v-img>
+                            <p class="ml-5">Quản Trị</p>
+                            <!-- <v-img width="200" height="60"
+                                src="https://res-console.cloudinary.com/dgtjdhrnq/media_explorer_thumbnails/c356e1ff40a796eca6ab9865b4972b1b/detailed"></v-img> -->
                         </v-toolbar-title>
                     </v-col>
                     <v-col class="text-center" cols="4">
                         <img @click.stop="rail = !rail" style="margin-top: 18%;"
-                            src="https://res.cloudinary.com/dgtjdhrnq/image/upload/v1708508357/indent_oymmcm.png" alt="">
+                            src="https://res.cloudinary.com/dgtjdhrnq/image/upload/v1708508357/indent_oymmcm.png"
+                            alt="">
                     </v-col>
                 </v-row>
             </v-toolbar>
@@ -25,8 +27,8 @@
                     <p>Loại sản phẩm</p>
                 </v-list-item>
                 <v-list-item style="color: #8B909A; font-size: 15px;"
-                    :class="{ 'font-weight-bold': title === 'Danh sách sản phẩm' }" prepend-icon="mdi-account-supervisor"
-                    @click="setTilteStore('Danh sách sản phẩm')" to='product'>
+                    :class="{ 'font-weight-bold': title === 'Danh sách sản phẩm' }"
+                    prepend-icon="mdi-account-supervisor" @click="setTilteStore('Danh sách sản phẩm')" to='product'>
                     <p>Sản phẩm</p>
                 </v-list-item>
             </v-list>
@@ -58,7 +60,8 @@
                         <v-list-item-title style="cursor: pointer;">Xem hồ sơ</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
-                        <v-list-item-title @click="this.$router.push({ name: 'login_page' })" style="cursor: pointer;">Đăng
+                        <v-list-item-title @click="this.$router.push({ name: 'login_page' })"
+                            style="cursor: pointer;">Đăng
                             xuất</v-list-item-title>
                     </v-list-item>
                 </v-list>
@@ -128,4 +131,5 @@ export default {
 body {
     font-family: 'Public Sans', sans-serif;
     font-size: 15px;
-}</style>
+}
+</style>

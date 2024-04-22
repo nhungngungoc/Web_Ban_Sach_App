@@ -1,8 +1,8 @@
 <template>
     <div>
         <v-card class="mx-auto pa-12 pb-8" variant="flat" max-width="500" rounded="lg">
-            <v-img class="mx-auto my-6" max-width="100"
-                src="https://tse4.mm.bing.net/th?id=OIP.fv5DeUz-OmV84NOdioiodgHaEc&pid=Api&P=0&h=220"></v-img>
+            <v-img class="mx-auto my-1" max-width="200" height="200"
+                src="https://res-console.cloudinary.com/dgtjdhrnq/media_explorer_thumbnails/c356e1ff40a796eca6ab9865b4972b1b/detailed"></v-img>
             <div style="font-weight: 600;" class="text-h4 text-center">
                 Đăng nhập
             </div>
@@ -18,12 +18,14 @@
                     density="compact" placeholder="Nhập mật khẩu" variant="outlined"
                     @click:append-inner="visible = !visible"></v-text-field>
                 <div class="d-flex justify-space-between align-center">
-                    <v-checkbox style="font-size: 14px;" v-model="terms" color="secondary" label="Ghi nhớ Đăng nhập"></v-checkbox>
-                    <a style="font-size: 14px;font-weight: 600;color: #0F60FF;" class="text-caption text-decoration-none mb-6">
+                    <v-checkbox style="font-size: 14px;" v-model="terms" color="secondary"
+                        label="Ghi nhớ Đăng nhập"></v-checkbox>
+                    <a style="font-size: 14px;font-weight: 600;color: #0F60FF;"
+                        class="text-caption text-decoration-none mb-6">
                         Quên mật khẩu?</a>
                 </div>
-                <v-btn style="font-size: 16px;" class="text-capitalize mb-8" @click="loginform.handleLogin" @enter="loginform.handleLogin" block color="#0F60FF"
-                    size="large">
+                <v-btn style="font-size: 16px;" class="text-capitalize mb-8" @click="loginform.handleLogin"
+                    @enter="loginform.handleLogin" block color="#0F60FF" size="large">
                     Đăng<span style="margin-left: 2px;" class="text-lowercase">Nhập</span>
                 </v-btn>
             </v-form>
@@ -81,7 +83,7 @@ const terms = ref('')
 // // });
 </script>
 <style scoped>
-*{
+* {
     font-family: 'Public Sans', sans-serif;
 }
 </style>
