@@ -16,8 +16,9 @@
                     </div>
                     <div style="display: block; margin-top: 8px;">
                         <span>Loại sản phẩm </span> <span class="text-blue ml-2">*</span>
-                        <v-select class="mt-1" v-model="category_id" :items="categortDropDown" item-title="text" item-value="value" label="Loại sản phẩm"
-                        style="background-color: white;" density="compact" single-line hide-details variant="outlined"></v-select>
+                        <v-select class="mt-1" v-model="category_id" :items="categortDropDown" item-title="text"
+                            item-value="value" label="Loại sản phẩm" style="background-color: white;" density="compact"
+                            single-line hide-details variant="outlined"></v-select>
                         <span style="color:red">{{ category_idError }}</span>
                     </div>
                     <div style="display: block; margin-top: 12px;">
@@ -38,8 +39,8 @@
                     <div style="display: block; margin-top: 12px;">
                         <span>Mô tả</span>
                         <v-textarea class="mt-1" v-model="description" placeholder="Nhập mô tả"
-                             style="background-color: white;" density="compact"
-                            single-line hide-details variant="outlined"></v-textarea>
+                            style="background-color: white;" density="compact" single-line hide-details
+                            variant="outlined"></v-textarea>
                         <span style="color:red">{{ descriptionError }}</span>
                     </div>
                     <div style="display: block; margin-top: 12px;">
@@ -50,11 +51,10 @@
                 </v-container>
                 <v-card-actions class="pr-4">
                     <v-spacer></v-spacer>
-                    <v-btn width="70px" variant="outlined" height="32px"
-                        style="font-size: 14px;margin-right: 16px;" @click="close()"
-                        class="text-capitalize" text="Hủy"></v-btn>
-                    <v-btn width="105px" height="32px" style="font-size: 14px;" type="submit"
-                        color="primary" class="text-capitalize" variant="elevated">{{ itemEdit ? "Update" : "Tạo" }}<span
+                    <v-btn width="70px" variant="outlined" height="32px" style="font-size: 14px;margin-right: 16px;"
+                        @click="close()" class="text-capitalize" text="Hủy"></v-btn>
+                    <v-btn width="105px" height="32px" style="font-size: 14px;" type="submit" color="primary"
+                        class="text-capitalize" variant="elevated">{{ itemEdit ? "Update" : "Tạo" }}<span
                             class="text-lowercase">{{ itemEdit ? "" : "mới" }}</span></v-btn>
                 </v-card-actions>
             </v-card>
@@ -65,7 +65,7 @@
 <script setup>
 import { useForm, useField } from 'vee-validate';
 import * as yup from 'yup';
-import { ref, watch, onUpdated,onMounted } from 'vue';
+import { ref, watch, onUpdated, onMounted } from 'vue';
 import { productServiceApi } from '@/service/product.api';
 import { categoryServiceApi } from '@/service/category.api';
 import { showSuccessNotification, showWarningsNotification } from '@/common/helper/helpers';
@@ -73,8 +73,8 @@ import { useLoadingStore } from '@/store/loading';
 import { MESSAGE_ERROR, Regex } from '@/common/contant/contants';
 import { logout } from '@/plugins/axios';
 const loading = useLoadingStore()
-const errorFile=ref(null)
-const errorPrice2=ref(null)
+const errorFile = ref(null)
+const errorPrice2 = ref(null)
 
 
 const props = defineProps(['itemEdit'])
@@ -87,13 +87,13 @@ watch(() => props.itemEdit, (newValue, oldValue) => {
     }
 });
 
-const categortDropDown=ref([])
-onMounted(()=>{
+const categortDropDown = ref([])
+onMounted(() => {
     getCategortDropDown()
 })
-const getCategortDropDown=async()=>{
-    const res=await categoryServiceApi._getDropdown()
-    categortDropDown.value=res.data
+const getCategortDropDown = async () => {
+    const res = await categoryServiceApi._getDropdown()
+    categortDropDown.value = res.data
 }
 const getProductById = async (id) => {
     try {
@@ -105,22 +105,21 @@ const getProductById = async (id) => {
             price.value = data.data.gia;
             description.value = data.data.moTa;
             tacgia.value = data.data.tenTacGia;
-            category_id.value=data.data.categoryId;
+            category_id.value = data.data.categoryId;
         }
         else {
             showWarningsNotification(data.message)
         }
     } catch (error) {
         console.error('Error fetching product detail:', error);
-    }finally{
+    } finally {
         loading.setLoading(false)
     }
 }
 onUpdated(() => {
-    if (props.itemEdit === null)
-    {
+    if (props.itemEdit === null) {
         resetForm()
-        errorFile.value=null
+        errorFile.value = null
     }
 })
 
@@ -134,7 +133,7 @@ const { value: name, errorMessage: nameError } = useField(
     yup
         .string()
         .required(MESSAGE_ERROR.REQUIRE)
-        .matches(Regex.NAME_PRODUCT,MESSAGE_ERROR.NAME)
+        .matches(Regex.NAME_PRODUCT, MESSAGE_ERROR.NAME)
 );
 
 const { value: category_id, errorMessage: category_idError } = useField(
@@ -151,7 +150,7 @@ const { value: price, errorMessage: priceError } = useField(
         .required(MESSAGE_ERROR.REQUIRE)
         .min(Regex.MIN, MESSAGE_ERROR.MIN)
         .typeError(MESSAGE_ERROR.NUMBER)
-        .max(Regex.MAX_PRICE,MESSAGE_ERROR.MAX_PRICE)
+        .max(Regex.MAX_PRICE, MESSAGE_ERROR.MAX_PRICE)
 );
 
 const { value: tacgia, errorMessage: tacgiaError } = useField(
@@ -161,41 +160,39 @@ const { value: tacgia, errorMessage: tacgiaError } = useField(
         .required(MESSAGE_ERROR.REQUIRE)
 );
 const { value: description, errorMessage: descriptionError } = useField(
-   'description',
-   yup
-       .string()
-       .required(MESSAGE_ERROR.REQUIRE)
-       .min(10, 'Mô tả phải có ít nhất 10 ký tự')
-       .max(500, 'Mô tả không được quá 500 ký tự')
+    'description',
+    yup
+        .string()
+        .required(MESSAGE_ERROR.REQUIRE)
+        .min(10, 'Mô tả phải có ít nhất 10 ký tự')
+        .max(500, 'Mô tả không được quá 500 ký tự')
 );
 const submit = handleSubmit(async () => {
-    if(errorPrice2.value!=null)
-    {
+    if (errorPrice2.value != null) {
         return
     }
     try {
         // alert( typeof parseInt(price.value))
         loading.setLoading(true)
         const formData = new FormData();
-        formData.append('Id', props.itemEdit?props.itemEdit.id:null);
+        formData.append('Id', props.itemEdit ? props.itemEdit.id : null);
         formData.append('TenSP', name.value);
-        formData.append('Gia',price.value);
-        formData.append('TenTacGia',tacgia.value);
-        formData.append('MoTa', description.value?description.value:"");
+        formData.append('Gia', price.value);
+        formData.append('TenTacGia', tacgia.value);
+        formData.append('MoTa', description.value ? description.value : "");
         formData.append('file', imageFile.value);
         formData.append('CategoryId', category_id.value);
         if (props.itemEdit == null) {
-            if(imageFile.value==null)
-            {
-                errorFile.value="Vui lòng chọn ảnh"
+            if (imageFile.value == null) {
+                errorFile.value = "Vui lòng chọn ảnh"
                 return
             }
             const data = await productServiceApi.createProduct(formData);
-            if(data.status===419)
+            if (data.status === 419)
                 logout()
             console.log(data)
             if (!data.success) {
-              //  alert("Tạo lỗi")
+                //  alert("Tạo lỗi")
                 showWarningsNotification(data.message)
             }
             else {
@@ -207,7 +204,7 @@ const submit = handleSubmit(async () => {
         }
         else {
             const data = await productServiceApi.updateProduct(props.itemEdit.id, formData);
-            if(data.status===419)
+            if (data.status === 419)
                 logout()
             if (!data.success) {
                 showWarningsNotification(data.message)
@@ -241,12 +238,12 @@ const close = () => {
     emit('close')
     resetForm()
 }
-watch(price,(newVal)=>{
+watch(price, (newVal) => {
     const containsWhiteSpace = /\s/.test(newVal);
     if (containsWhiteSpace)
-        errorPrice2.value="Giá không đc nhập khoảng trắng"
+        errorPrice2.value = "Giá không đc nhập khoảng trắng"
     else
-        errorPrice2.value=null
+        errorPrice2.value = null
 })
 </script>
 <style scoped>
@@ -268,7 +265,7 @@ watch(price,(newVal)=>{
     background-color: #e0e0e0;
 }
 
-body{
+body {
     font-family: 'Public Sans', sans-serif;
     font-size: 14px;
 }
