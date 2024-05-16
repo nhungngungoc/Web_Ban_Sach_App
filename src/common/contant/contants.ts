@@ -237,3 +237,7 @@ export const DEFAULT_COMMON_LIST_QUERY = {
   // orderDirection: 'desc',
   limit: DEFAULT_LIMIT_FOR_PAGINATION,
 };
+export enum TypePay {
+  PAY = "Pay",
+  NOPAY = "noPay",
+}

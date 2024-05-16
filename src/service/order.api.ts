@@ -7,10 +7,14 @@ interface IOrderCreate {
   DiaChi: string;
   Total: number;
   cartId: string[];
+  TypePay: string;
 }
 class OrderApiService extends ApiService {
   async createOrder(data: IOrderCreate) {
     return await this.client.post(`${this.baseUrl}`, data);
+  }
+  async VnPay(data: IOrderCreate) {
+    return await this.client.post(`${this.baseUrl}/VnPay`, data);
   }
 }
 

@@ -3,6 +3,7 @@ import { tinhServiceApi } from "@/service/tinh.api";
 import { huyenServiceApi } from "@/service/huyen.api";
 import { xaServiceApi } from "@/service/xa.api";
 import { ref } from "vue";
+import { TypePay } from "@/common/contant/contants";
 interface commonSelecte {
   text: string;
   value: string;
@@ -12,7 +13,7 @@ export const useThanhToanStore = defineStore("useThanhToanStore", () => {
   const listTinh = ref<commonSelecte[]>([]);
   const listHuyen = ref<commonSelecte[]>([]);
   const listXa = ref<commonSelecte[]>([]);
-
+  const typePay = ref<string>();
   async function getAllTinh() {
     const { data } = await tinhServiceApi.getAll();
     listTinh.value = data.map((item: any) => {
@@ -43,12 +44,17 @@ export const useThanhToanStore = defineStore("useThanhToanStore", () => {
       };
     });
   }
+  function setTypePay(value: TypePay) {
+    typePay.value = value;
+  }
   return {
     getAllTinh,
     getAllHuyen,
     getAllXa,
     listTinh,
+    setTypePay,
     listHuyen,
     listXa,
+    typePay,
   };
 });

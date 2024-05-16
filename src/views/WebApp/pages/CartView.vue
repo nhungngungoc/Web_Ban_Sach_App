@@ -1,15 +1,17 @@
 <script setup>
 import HeaderView from '../components/HeaderView.vue'
 import FooterView from '../components/FooterView.vue'
-import { formatNumberWithCommas } from '@/common/helper/helpers'
+import { formatNumberWithCommas, showWarningsNotification } from '@/common/helper/helpers'
 import { userCartSotore } from '../store/cart.store'
-import { onMounted } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
+import { useThanhToanStore } from '../store/thanhtoan.store'
 import router from '@/router'
 import { storeToRefs } from 'pinia'
+import { TypePay } from '@/common/contant/contants'
 const cartStore = userCartSotore()
 const { carts, totalGia, soLuongSanPham } = storeToRefs(cartStore)
 const { getCarts, actions, addCart, deleteCart } = cartStore
-
+const thanhToanStore = useThanhToanStore()
 onMounted(async () => {
     await getCarts()
 })
@@ -38,8 +40,28 @@ async function handleDeletCart(item) {
     await getCarts()
 }
 function toPage(name) {
+    if (typePay.value === undefined) {
+        showWarningsNotification("Vui lòng chọn phương thức thanh toán")
+        return
+    }
     router.push({ name: name })
 }
+const typePay = ref();
+const operationPay = computed(() => {
+    return [
+        {
+            label: 'Thanh toán khi nhận hàng',
+            value: TypePay.NOPAY
+        },
+        {
+            label: 'ATM',
+            value: TypePay.PAY
+        }
+    ]
+})
+watch(typePay, (value) => {
+    thanhToanStore.setTypePay(value)
+})
 </script>
 <template>
     <div class="w-100">
@@ -97,7 +119,9 @@ function toPage(name) {
                         <div class="d-flex pl-5 mt-2">
                             <div style="width: 50%;">Hình thức thành toán:</div>
                             <div style="width: 50%;">
-                                <p class="text-right mr-2 font-weight-bold">Thanh toán ngay khi nhận hàng</p>
+                                <!-- <p class="text-right mr-2 font-weight-bold">Thanh toán ngay khi nhận hàng</p> -->
+                                <v-select v-model="typePay" :items="operationPay" item-title="label" item-value="value"
+                                    density="compact" variant="outlined"></v-select>
                             </div>
                         </div>
                         <v-divider></v-divider>

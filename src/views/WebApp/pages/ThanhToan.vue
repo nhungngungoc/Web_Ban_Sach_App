@@ -12,7 +12,7 @@ import { tinhServiceApi } from '@/service/tinh.api';
 import { huyenServiceApi } from '@/service/huyen.api';
 import { xaServiceApi } from '@/service/xa.api';
 import { orderServiceApi } from '@/service/order.api';
-import { PageName } from '@/common/contant/contants';
+import { PageName, TypePay } from '@/common/contant/contants';
 const cartStore = userCartSotore()
 const { carts, totalGia, soLuongSanPham } = storeToRefs(cartStore)
 const { getCarts, actions, addCart, deleteCart } = cartStore
@@ -66,22 +66,35 @@ const handleSubmitForm = handleSubmit(async () => {
     const diachi = thon.value + " - " + getXa.data.loai + " " + getXa.data.tenXa + " - " + getHuyen.data.loai + " " + getHuyen.data.tenHuyen + " - " + getTinh.data.loai + " " + getTinh.data.tenTinh
 
 
-
-    const res: any = await orderServiceApi.createOrder({
-        NguoiNhan: fullname.value as string,
-        DiaChi: diachi,
-        Phone: phone.value as string,
-        Total: totalGia.value as number,
-        cartId: carts.value.map(x => x.cartId)
-    })
-    if (res.success) {
-        router.push({
-            name: 'cart'
+    if (thanhToanStore.typePay === TypePay.PAY) {
+        const res: any = await orderServiceApi.VnPay({
+            NguoiNhan: fullname.value as string,
+            DiaChi: diachi,
+            Phone: phone.value as string,
+            Total: totalGia.value as number,
+            cartId: carts.value.map(x => x.cartId),
+            TypePay: thanhToanStore.typePay as string
         })
-        showSuccessNotification(res.message)
+        window.open(res.data, "_blank");
     }
     else {
-        showWarningsNotification(res.message)
+        const res: any = await orderServiceApi.createOrder({
+            NguoiNhan: fullname.value as string,
+            DiaChi: diachi,
+            Phone: phone.value as string,
+            Total: totalGia.value as number,
+            cartId: carts.value.map(x => x.cartId),
+            TypePay: thanhToanStore.typePay as string
+        })
+        if (res.success) {
+            router.push({
+                name: 'cart'
+            })
+            showSuccessNotification(res.message)
+        }
+        else {
+            showWarningsNotification(res.message)
+        }
     }
 })
 
