@@ -24,10 +24,28 @@
                         <v-icon size="large">mdi mdi-cart</v-icon>
                         <p>Giỏ hàng</p>
                     </div>
-                    <div class="d-flex flex-column align-center justify-center">
-                        <v-icon size="large">mdi mdi-account</v-icon>
-                        <p>Tài khoản</p>
-                    </div>
+
+                    <v-menu open-on-hover>
+                        <template v-slot:activator="{ props }">
+                            <div v-bind="props" class="d-flex flex-column align-center justify-center">
+                                <v-avatar
+                                    image="https://tse3.mm.bing.net/th?id=OIP.Cl56H6WgxJ8npVqyhefTdQHaHa&pid=Api&P=0&h=220"></v-avatar>
+                                <p>Tài khoản</p>
+                            </div>
+                        </template>
+                        <v-list class="ma-2">
+                            <v-list-item>
+                                <v-list-item-title style="cursor: pointer;"
+                                    @click="this.$router.push({ name: 'order' })">Đơn hàng của
+                                    bạn</v-list-item-title>
+                            </v-list-item>
+                            <v-list-item>
+                                <v-list-item-title @click="this.$router.push({ name: 'login_page' })"
+                                    style="cursor: pointer;">Đăng
+                                    xuất</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
                 </div>
             </div>
         </div>

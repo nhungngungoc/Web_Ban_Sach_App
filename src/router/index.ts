@@ -50,6 +50,22 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/order",
+    name: "order",
+    component: () => import("../views/WebApp/pages/OderView.vue"),
+    meta: {
+      public: true,
+    },
+  },
+  {
+    path: "/order/:id",
+    name: "orderdetail",
+    component: () => import("../views/WebApp/pages/OrderDetail.vue"),
+    meta: {
+      public: true,
+    },
+  },
+  {
     path: "/thanhtoan",
     name: "thanhtoan",
     component: () => import("../views/WebApp/pages/ThanhToan.vue"),
@@ -127,9 +143,9 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: "test",
-        name: "sds",
-        component: () => import("../views/Admin/User/TestView.vue"),
+        path: "dashboard",
+        name: "dashboard",
+        component: () => import("../views/Admin/Dashboard/IndexView.vue"),
         meta: {
           role: Role.ADMIN,
           public: false,

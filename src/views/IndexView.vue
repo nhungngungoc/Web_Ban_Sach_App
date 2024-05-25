@@ -19,8 +19,14 @@
                 </v-row>
             </v-toolbar>
             <v-list density="compact" nav>
+
                 <v-list-item v-show="this.rail == false" class="text-uppercase text-item"
                     style="color: #8B909A;font-size: 11px;">Quản lý</v-list-item>
+                <v-list-item style="color: #8B909A; font-size: 15px;"
+                    :class="{ 'font-weight-bold': title === 'Thống kê' }" prepend-icon="mdi-account-supervisor"
+                    @click="setTilteStore('Thống kê')" to='dashboard'>
+                    <p>Thống kê</p>
+                </v-list-item>
                 <v-list-item style="color: #8B909A;font-size: 15px;"
                     :class="{ 'font-weight-bold': title === 'Danh sách loại sản phẩm' }"
                     @click="setTilteStore('Danh sách loại sản phẩm')" prepend-icon="mdi-hexagon-slice-6" to='category'>
@@ -31,6 +37,7 @@
                     prepend-icon="mdi-account-supervisor" @click="setTilteStore('Danh sách sản phẩm')" to='product'>
                     <p>Sản phẩm</p>
                 </v-list-item>
+
             </v-list>
         </v-navigation-drawer>
         <v-app-bar class="px-4 v-app-bar" color="rgb(247, 247, 247)" :elevation="0" rounded="0">
@@ -51,7 +58,8 @@
                 <template v-slot:activator="{ props }">
                     <v-badge dot color="green">
                         <v-avatar style="cursor: pointer;" v-bind="props">
-                            <v-img :src="avatar" alt="John"></v-img>
+                            <v-img src="https://tse4.mm.bing.net/th?id=OIP.m2spIDsVOhboFz0JfExJQQAAAA&pid=Api&P=0&h=220"
+                                alt="John"></v-img>
                         </v-avatar>
                     </v-badge>
                 </template>
@@ -94,7 +102,7 @@ export default {
         }
     },
     created() {
-        this.title = 'Danh sách sản phẩm'
+        this.title = 'Thống kê'
     }
 }
 </script>

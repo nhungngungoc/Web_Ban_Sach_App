@@ -16,6 +16,14 @@ class OrderApiService extends ApiService {
   async VnPay(data: IOrderCreate) {
     return await this.client.post(`${this.baseUrl}/VnPay`, data);
   }
+  async getOrders() {
+    return await this.client.get(`${this.baseUrl}/getListOrderByUserId`);
+  }
+  async getOrderDetail(orderId: string) {
+    return await this.client.get(
+      `${this.baseUrl}/getListOrderDetailByUserId/${orderId}`
+    );
+  }
 }
 
 export const orderServiceApi = new OrderApiService(
