@@ -10,7 +10,8 @@
                             </div>
                             <div>
                                 <p class="text-red font-weight-bold">Tổng số khách hàng</p>
-                                <p class=" font-weight-bold"> 7 khách hàng</p>
+                                <p class=" font-weight-bold"> {{ formatNumberWithCommas(countUser.toString()) }} khách
+                                    hàng</p>
                             </div>
                         </v-card>
                     </div>
@@ -21,7 +22,8 @@
                             </div>
                             <div>
                                 <p class="text-red font-weight-bold">Tổng số sản phẩm</p>
-                                <p class=" font-weight-bold"> 7 sản phẩm</p>
+                                <p class=" font-weight-bold"> {{ formatNumberWithCommas(countProduct.toString()) }} sản
+                                    phẩm</p>
                             </div>
                         </v-card>
                     </div>
@@ -34,7 +36,8 @@
                             </div>
                             <div>
                                 <p class="text-red font-weight-bold">Tổng số đơn hàng</p>
-                                <p class="font-weight-bold"> 7 khách hàng</p>
+                                <p class="font-weight-bold"> {{ formatNumberWithCommas(countOrder.toString()) }} đơn
+                                    hàng</p>
                             </div>
                         </v-card>
                     </div>
@@ -45,7 +48,8 @@
                             </div>
                             <div>
                                 <p class="text-red font-weight-bold">Doanh Thu Hôm Nay</p>
-                                <p class="font-weight-bold"> 2000.000</p>
+                                <p class="font-weight-bold"> {{ formatNumberWithCommas(doanhThuHomNay.toString()) }} VNĐ
+                                </p>
                             </div>
                         </v-card>
                     </div>
@@ -66,45 +70,62 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useDashboardStore } from './Dashboard.store';
+import { formatNumberWithCommas } from '@/common/helper/helpers';
+import { computed, onMounted, ref } from 'vue';
 import VueApexCharts from 'vue3-apexcharts';
+const dashboardStore = useDashboardStore()
 
+onMounted(async () => {
+    await dashboardStore.getDashboard();
+})
+
+const countUser = computed(() => dashboardStore.countUser);
+const countProduct = computed(() => dashboardStore.countProduct);
+const countOrder = computed(() => dashboardStore.countOrder);
+const doanhThuHomNay = computed(() => dashboardStore.doanhThuHomNay);
 // Fake data for weekly revenue
-const chartSeries = ref([
-    {
-        name: 'Revenue',
-        data: [10000, 15000, 8000, 20000, 18000, 22000, 25000],
-    },
-]);
+
+const chartSeries = computed(() => {
+    return [
+        {
+            name: "Doanh Thu",
+            data: dashboardStore.doanhThuTuanNay.map((item: any) => item.total) || []
+        }
+    ]
+});
 
 const chartHeight = ref(400);
-const chartOptions = ref({
-    chart: {
-        height: 400,
-        type: 'bar',
-        toolbar: {
-            show: false,
+const chartOptions = computed(() => {
+    return {
+        chart: {
+            height: 400,
+            type: 'bar',
+            toolbar: {
+                show: false,
+            },
         },
-    },
-    plotOptions: {
-        bar: {
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded',
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '50%',
+                endingShape: 'rounded',
+            },
         },
-    },
-    xaxis: {
-        categories: [
-            'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
-        ],
-        labels: {
-            show: true,
-        }
-    },
-    yaxis: {
-        title: {
-            text: 'Revenue (VNĐ)',
+        xaxis: {
+            categories: dashboardStore.doanhThuTuanNay.map((item: any) => item.name) || [],
+            labels: {
+                show: true,
+            }
         },
-    },
-});
+        yaxis: {
+            title: {
+                text: '',
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+    }
+})
 </script>
