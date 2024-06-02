@@ -2,7 +2,7 @@
     <div>
         <v-card class="mx-auto pa-5 pb-8" variant="flat" max-width="500" rounded="lg">
             <v-img class="mx-auto my-6" max-width="100"
-                src="https://tse4.mm.bing.net/th?id=OIP.fv5DeUz-OmV84NOdioiodgHaEc&pid=Api&P=0&h=220"></v-img>
+            :src="logo"></v-img>
             <div style="font-weight: 600;" class="text-h4 text-center">
                 Đăng Ký
             </div>
@@ -40,6 +40,8 @@
 </template>
 <script setup>
 import { reactive, ref } from 'vue';
+import logo from '@/assets/logoweb.jpg'
+
 const visible = ref(false)
 const visible1 = ref(false)
 const terms = ref('')

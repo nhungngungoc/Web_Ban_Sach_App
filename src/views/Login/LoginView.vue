@@ -2,7 +2,7 @@
     <div>
         <v-card class="mx-auto pa-12 pb-8" variant="flat" max-width="500" rounded="lg">
             <v-img class="mx-auto my-1" max-width="200" height="200"
-                src="https://res-console.cloudinary.com/dgtjdhrnq/media_explorer_thumbnails/c356e1ff40a796eca6ab9865b4972b1b/detailed"></v-img>
+                :src="logo"></v-img>
             <div style="font-weight: 600;" class="text-h4 text-center">
                 Đăng nhập
             </div>
@@ -39,6 +39,7 @@
     </div>
 </template>
 <script setup>
+import logo from '@/assets/logoweb.jpg'
 import { reactive, ref } from 'vue';
 import { userLoginForm } from './loginform.ts'
 const loginform = reactive(userLoginForm());
